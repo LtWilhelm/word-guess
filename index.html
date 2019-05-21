@@ -4,18 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Save Stickman!</title>
 </head>
 <body>
-    <div>
-        <h1>Word Guess!</h1>
-        <p id="word">test</p>
-        <p>Guess the word above by pressing the keys on your keyboard! You have 6 lives, good luck!</p>
-        <div>
-            <p id="wrong"></p>
+    <div class="container">
+        <h1>Save Stickman!</h1>
+        <canvas id="canvas" width="300px" height="300px"></canvas>
+        <div class="center">
+            <p>My name is:</p>
+            <p id="word"></p>
+        </div>
+        <p id="instructions">Oh no! The stickman is about to be hanged! Guess his name to save him, but be careful, you can only guess 5 wrong letters before he drops!</p>
+        <div id="guessBox">
+            <p id="remaining"></p>
             <p>Guesses so far:</p>
             <p id="guesses"></p>
+            <p id="wrong"></p>
         </div>
+        <div>
+            <p id="wins"></p>
+            <p id="losses"></p>
+        </div>
+        <p id="winLose" hidden></p>
+        <button id="reset" hidden>Play again?</button>
     </div>
 
 

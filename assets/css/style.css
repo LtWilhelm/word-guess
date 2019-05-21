@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=Rye|Volkhov&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Volkhov', serif;
+    line-height: 2;
+}
+
+.container {
+    width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: saddlebrown;
+    box-shadow: 0 0 5px black;
+}
+
+h1 {
+    font-family: 'Rye', cursive;
+    font-size: 3em;
+    text-align: center;
+    width: 100%;
+    background-color: brown;
+    box-shadow: 0 0 5px black;
+}
+
+.center {
+    flex-basis: 100%;
+    display: block;
+    text-align: center;
+    margin: auto;
+}
+
+#canvas {
+    /* height: 300px;
+    width: 300px; */
+    background-image: url(../images/wildwestbackground.jpg);
+    box-shadow: 0 0 5px black inset;
+    padding: 3em;
+    margin: 1em auto;
+    justify-self: center;
+}
+
+#word {
+    flex-basis: 100%;
+    text-align: center;
+}
+
+#instructions {
+    width: 50%;
+}
+
+button {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3em;
+    font-family: 'Rye', cursive;
+    background-color: sienna;
+    border-color: saddlebrown;
+}
+
+#winLose {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3em;
+    font-family: 'Rye', cursive;
+    background-color: sienna;
+    box-shadow: 0 0 5px black;
+}

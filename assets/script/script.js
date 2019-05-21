@@ -3,17 +3,103 @@ let selectWord;
 let displayWord = [];
 let guessedLetters = [];
 let letter;
-let lives;
+let guessesRemaining;
+let wins = 0;
+let losses = 0;
+let gameActive = true;
 
 // html id's
 let word = document.getElementById('word');
-let wrong = document.getElementById('wrong')
-let guesses = document.getElementById('guesses')
+let wrong = document.getElementById('wrong');
+let guesses = document.getElementById('guesses');
+let remaining = document.getElementById('remaining');
+let canvas = document.getElementById('canvas');
+let winDisplay = document.getElementById('wins');
+let lossDisplay = document.getElementById('losses');
+let resetButton = document.getElementById('reset');
+let winLose = document.getElementById('winLose');
+
+// canvas context and shapes
+let ctx = canvas.getContext('2d');
+// ctx.fillStyle = 
+function gallows () {
+    ctx.strokeStyle = 'saddlebrown';
+    ctx.lineWidth = 10;
+    ctx.moveTo(150, 40);
+    ctx.lineTo(150, 10);
+    ctx.lineTo(30, 10);
+    ctx.lineTo(30, 290);
+    ctx.moveTo(0, 290);
+    ctx.lineTo(300, 290);
+    ctx.stroke();
+}
+function head () {
+    ctx.strokeStyle = 'black';
+    ctx.fillStyle = 'beige';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(150, 80, 40, 0, 360);
+    ctx.stroke();
+    ctx.fill();
+}
+function body () {
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 5;
+    ctx.moveTo(150, 120);
+    ctx.lineTo(150, 200);
+    ctx.stroke();
+}
+function leftLeg () {
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 5;
+    ctx.moveTo(150, 198);
+    ctx.lineTo(100, 250);
+    ctx.stroke();
+}
+function rightLeg () {
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 5;
+    ctx.moveTo(150, 198);
+    ctx.lineTo(200, 250);
+    ctx.stroke();
+}
+function arms () {
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 5;
+    ctx.moveTo(100, 140);
+    ctx.lineTo(200, 140);
+    ctx.stroke();
+}
+function printGO () {
+    winLose.innerHTML = "He's dead, Jim..."
+    winLose.hidden = false;
+}
+function printWin () {
+    winLose.innerHTML = "Stickman Lives!"
+    winLose.hidden = false;
+}
+function clear () {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.width = canvas.width;
+}
+
 
 // Objects
 let wordGuess = {
     startGame: function() {
-        lives = 6;
+        gameActive = true;
+        clear();
+        gallows();
+        winLose.hidden = true;
+        resetButton.hidden = true;
+        displayWord = [];
+        guessedLetters = [];
+        guessesRemaining = 5;
+        remaining.innerHTML = 'Guesses remaining: ' + guessesRemaining;
+        wrong.innerHTML = ' ';
+        guesses.innerHTML = ' ';
+        winDisplay.innerHTML = 'Wins: ' + wins;
+        lossDisplay.innerHTML = 'Losses: ' + losses;
         selectWord = wordList[Math.floor(Math.random() * wordList.length)];
         console.log(selectWord);
         for (let i = 0; i < selectWord.length; i++) {
@@ -23,7 +109,10 @@ let wordGuess = {
         console.log(displayWord);
     },
     compareLetter: function() {
-        if (selectWord.includes(letter)) {
+        if (displayWord.includes(letter) || guessedLetters.includes(letter)) {
+            wrong.innerHTML = 'You already guessed ' + letter.toUpperCase();
+        }
+        else if (selectWord.includes(letter)) {
             for (let i = 0; i < selectWord.length; i++) {
                 if (selectWord[i] === letter) {
                     displayWord.splice(i, 1, letter);
@@ -32,11 +121,12 @@ let wordGuess = {
             word.innerHTML = displayWord.join(' ').toUpperCase();
         }
         else {
-            lives--;
-            wrong.innerHTML = 'Sorry, there is no ' + letter;
+            guessesRemaining--;
+            remaining.innerHTML = 'Guesses remaining: ' + guessesRemaining;
+            wrong.innerHTML = 'Sorry, there is no ' + letter.toUpperCase();
             guessedLetters.push(letter);
-            guesses.innerHTML = guessedLetters;
-            if (lives <= 0) {
+            guesses.innerHTML = guessedLetters.join(', ').toUpperCase();
+            if (guessesRemaining <= 0) {
                 this.gameOver();
             }
         }
@@ -45,17 +135,43 @@ let wordGuess = {
         }
     },
     gameWon: function(){
-        document.write('Congratulations, you win!')
+        printWin();
+        wins++;
+        resetButton.hidden = false;
+        gameActive = false;
     },
     gameOver: function() {
-        document.write('Game Over');
+        printGO();
+        losses++;
+        resetButton.hidden = false;
+        gameActive = false;
     }
 }
 
+wordGuess.startGame();
 
 document.onkeyup = function(event) {
-    letter = event.key.toLowerCase();
-    console.log(letter);
-    wordGuess.compareLetter();
+    if (gameActive) {
+        letter = event.key.toLowerCase();
+        console.log(letter);
+        wordGuess.compareLetter();
+        if (guessesRemaining === 4) {
+            head();
+        }
+        else if (guessesRemaining === 3) {
+            body();
+        }
+        else if (guessesRemaining === 2) {
+            leftLeg();
+        }
+        else if (guessesRemaining === 1) {
+            rightLeg();
+        }
+        else if (guessesRemaining === 0) {
+            arms();
+        }
+    }
 }
-wordGuess.startGame();
+resetButton.onclick = function() {
+    wordGuess.startGame();
+}
