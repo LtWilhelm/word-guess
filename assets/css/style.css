@@ -7,6 +7,7 @@
 body {
     font-family: 'Volkhov', serif;
     line-height: 2;
+    background-color: beige;
 }
 
 .container {
@@ -15,11 +16,22 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    background-color: saddlebrown;
+    background-color: #8b4513;
     box-shadow: 0 0 5px black;
+    padding: 1em;
+}
+
+.container p {
+    color: white;
+}
+
+.box {
+    box-shadow: 0 0 5px black;
+    padding: .5em;
 }
 
 h1 {
+    text-shadow: 1px 1px 1px beige;
     font-family: 'Rye', cursive;
     font-size: 3em;
     text-align: center;
@@ -32,7 +44,7 @@ h1 {
     flex-basis: 100%;
     display: block;
     text-align: center;
-    margin: auto;
+    margin: 0 auto 1em;
 }
 
 #canvas {

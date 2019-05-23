@@ -1,4 +1,4 @@
-let wordList = ['advice', 'power', 'man', 'spiders', 'creature', 'quill', 'wealth', 'laugh', 'room', 'range', 'zebra', 'silver', 'star', 'riddle', 'mine', 'year', 'rifle', 'honey', 'channel', 'clam', 'nerve', 'furniture', 'desire', 'bushes'];
+let wordList = ['haiden', 'kadyn', 'kaleb', 'misael', 'liam', 'gordon', 'maximillian', 'lawson', 'reuben', 'brycen', 'rogelio', 'thomas', 'emmett', 'dean', 'keith', 'greyson', 'grayson', 'blake', 'christian', 'seth', 'davin', 'craig', 'vance', 'dominic', 'andres'];
 let selectWord;
 let displayWord = [];
 let guessedLetters = [];
@@ -7,6 +7,7 @@ let guessesRemaining;
 let wins = 0;
 let losses = 0;
 let gameActive = true;
+let hasDrawn = false;
 
 // html id's
 let word = document.getElementById('word');
@@ -41,13 +42,16 @@ function head () {
     ctx.arc(150, 80, 40, 0, 360);
     ctx.stroke();
     ctx.fill();
+    hasDrawn = true;
 }
 function body () {
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 5;
+    ctx.beginPath();
     ctx.moveTo(150, 120);
     ctx.lineTo(150, 200);
     ctx.stroke();
+    hasDrawn = true;
 }
 function leftLeg () {
     ctx.strokeStyle = 'black';
@@ -55,6 +59,7 @@ function leftLeg () {
     ctx.moveTo(150, 198);
     ctx.lineTo(100, 250);
     ctx.stroke();
+    hasDrawn = true;
 }
 function rightLeg () {
     ctx.strokeStyle = 'black';
@@ -62,6 +67,7 @@ function rightLeg () {
     ctx.moveTo(150, 198);
     ctx.lineTo(200, 250);
     ctx.stroke();
+    hasDrawn = true;
 }
 function arms () {
     ctx.strokeStyle = 'black';
@@ -69,6 +75,7 @@ function arms () {
     ctx.moveTo(100, 140);
     ctx.lineTo(200, 140);
     ctx.stroke();
+    hasDrawn = true;
 }
 function printGO () {
     winLose.innerHTML = "He's dead, Jim..."
@@ -81,6 +88,27 @@ function printWin () {
 function clear () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvas.width = canvas.width;
+}
+function drawNext () {
+    if (!hasDrawn) {
+        switch (guessesRemaining) {
+            case 4:
+                head();
+                break;
+            case 3:
+                body();
+                break;
+            case 2:
+                leftLeg();
+                break;
+            case 1:
+                rightLeg();
+                break;
+            case 0:
+                arms();
+                break;
+        }
+    }
 }
 
 
@@ -126,6 +154,7 @@ let wordGuess = {
             wrong.innerHTML = 'Sorry, there is no ' + letter.toUpperCase();
             guessedLetters.push(letter);
             guesses.innerHTML = guessedLetters.join(', ').toUpperCase();
+            hasDrawn = false;
             if (guessesRemaining <= 0) {
                 this.gameOver();
             }
@@ -155,21 +184,7 @@ document.onkeyup = function(event) {
         letter = event.key.toLowerCase();
         console.log(letter);
         wordGuess.compareLetter();
-        if (guessesRemaining === 4) {
-            head();
-        }
-        else if (guessesRemaining === 3) {
-            body();
-        }
-        else if (guessesRemaining === 2) {
-            leftLeg();
-        }
-        else if (guessesRemaining === 1) {
-            rightLeg();
-        }
-        else if (guessesRemaining === 0) {
-            arms();
-        }
+        drawNext();
     }
 }
 resetButton.onclick = function() {
