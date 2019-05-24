@@ -18,6 +18,7 @@ let winDisplay = document.getElementById('wins');
 let lossDisplay = document.getElementById('losses');
 let resetButton = document.getElementById('reset');
 let winLose = document.getElementById('winLose');
+let endScreen = document.getElementById('gameOver')
 
 // canvas context and shapes
 let ctx = canvas.getContext('2d');
@@ -90,8 +91,8 @@ let wordGuess = {
         gameActive = true;
         clear();
         gallows();
-        winLose.hidden = true;
         resetButton.hidden = true;
+        endScreen.hidden = true;
         displayWord = [];
         guessedLetters = [];
         guessesRemaining = 5;
