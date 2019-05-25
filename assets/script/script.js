@@ -124,7 +124,7 @@ let wordGuess = {
         clear();
         gallows();
         resetButton.hidden = true;
-        endScreen.hidden = true;
+        winLose.hidden = true;
         displayWord = [];
         guessedLetters = [];
         guessesRemaining = 5;
