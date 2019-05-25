@@ -3,6 +3,7 @@ let selectWord;
 let displayWord = [];
 let guessedLetters = [];
 let letter;
+let letters = 'abcdefghijklmnopqrstuvwxyz';
 let guessesRemaining;
 let wins = 0;
 let losses = 0;
@@ -56,6 +57,7 @@ function body () {
 function leftLeg () {
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 5;
+    ctx.beginPath();
     ctx.moveTo(150, 198);
     ctx.lineTo(100, 250);
     ctx.stroke();
@@ -64,6 +66,7 @@ function leftLeg () {
 function rightLeg () {
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 5;
+    ctx.beginPath();
     ctx.moveTo(150, 198);
     ctx.lineTo(200, 250);
     ctx.stroke();
@@ -72,6 +75,7 @@ function rightLeg () {
 function arms () {
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 5;
+    ctx.beginPath();
     ctx.moveTo(100, 140);
     ctx.lineTo(200, 140);
     ctx.stroke();
@@ -134,7 +138,6 @@ let wordGuess = {
             displayWord.push('_');
         }
         word.innerHTML = displayWord.join(' ');
-        console.log(displayWord);
     },
     compareLetter: function() {
         if (displayWord.includes(letter) || guessedLetters.includes(letter)) {
@@ -181,10 +184,15 @@ wordGuess.startGame();
 
 document.onkeyup = function(event) {
     if (gameActive) {
-        letter = event.key.toLowerCase();
-        console.log(letter);
-        wordGuess.compareLetter();
-        drawNext();
+        if (letters.includes(event.key.toLowerCase())) {
+            letter = event.key.toLowerCase();
+            console.log(letter);
+            wordGuess.compareLetter();
+            drawNext();
+        }
+        else {
+            wrong.innerHTML = 'That is not a letter.'
+        }
     }
 }
 resetButton.onclick = function() {
